@@ -1,0 +1,119 @@
+{
+  "name": "TutoringRequest",
+  "type": "object",
+  "properties": {
+    "student_name": {
+      "type": "string",
+      "description": "Full name of the student"
+    },
+    "email": {
+      "type": "string",
+      "description": "Contact email"
+    },
+    "age_group": {
+      "type": "string",
+      "enum": [
+        "6-10",
+        "11-14",
+        "15-18",
+        "adult"
+      ],
+      "description": "Age group of the student"
+    },
+    "subject": {
+      "type": "string",
+      "enum": [
+        "science",
+        "technology",
+        "engineering",
+        "mathematics"
+      ],
+      "description": "STEM subject of interest"
+    },
+    "preferred_day": {
+      "type": "string",
+      "enum": [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday"
+      ],
+      "description": "Preferred day of the week"
+    },
+    "preferred_time": {
+      "type": "string",
+      "enum": [
+        "morning",
+        "afternoon",
+        "evening"
+      ],
+      "description": "Preferred time of day"
+    },
+    "feeling_overwhelmed": {
+      "type": "boolean",
+      "default": false,
+      "description": "If the student is currently feeling overwhelmed and needs low-stress tutoring"
+    },
+    "additional_notes": {
+      "type": "string",
+      "description": "Any additional notes or requests"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "matched",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending"
+    }
+  },
+  "required": [
+    "student_name",
+    "email",
+    "subject"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
